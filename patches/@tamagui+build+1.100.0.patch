@@ -1,0 +1,59 @@
+diff --git a/node_modules/@tamagui/build/tamagui-build.js b/node_modules/@tamagui/build/tamagui-build.js
+index 97859b3..84d0a4c 100755
+--- a/node_modules/@tamagui/build/tamagui-build.js
++++ b/node_modules/@tamagui/build/tamagui-build.js
+@@ -9,7 +9,7 @@ const esbuild = require('esbuild')
+ const fg = require('fast-glob')
+ const createExternalPlugin = require('./externalNodePlugin')
+ const debounce = require('lodash.debounce')
+-const { dirname } = require('path')
++const { dirname, basename } = require('path')
+ const alias = require('./esbuildAliasPlugin')
+ 
+ const jsOnly = !!process.env.JS_ONLY
+@@ -485,6 +485,7 @@ async function esbuildWriteIfChanged(
+     allowOverwrite: true,
+     keepNames: false,
+     sourcemap: true,
++    // sourcesContent: true, // Not actually required for VSCode debugger to work. What matters is the `//# sourceMappingURL=` comment in the output file.
+     sourcesContent: false,
+     logLevel: 'error',
+     ...(platform === 'native' && nativeEsbuildSettings),
+@@ -594,6 +595,9 @@ async function esbuildWriteIfChanged(
+         }
+       }
+ 
++      // test
++      // outString = outString.split('\n').filter(s => !s.startsWith('//# sourceMappingURL')).join('\n')
++
+       // flush before fully specified so it finds the file
+       await flush(outString, outPath)
+ 
+@@ -603,11 +607,12 @@ async function esbuildWriteIfChanged(
+           const mjsOutPath = outPath.replace('.js', '.mjs')
+           // if bundling no need to specify as its all internal
+           // and babel is bad on huge bundled files
+-          const output = shouldBundle
++          const { code: output, map: sourceMap } = shouldBundle
+             ? outString
+             : transform(outString, {
+                 filename: mjsOutPath,
+                 configFile: false,
++                sourceMap: true,
+                 plugins: [
+                   [
+                     require.resolve('@tamagui/babel-plugin-fully-specified'),
+@@ -622,10 +627,11 @@ async function esbuildWriteIfChanged(
+                   //   ? null
+                   //   : require.resolve('./babel-plugin-process-env-to-meta'),
+                 ].filter(Boolean),
+-              }).code
++              })
+ 
+           // output to mjs fully specified
+-          await fs.writeFile(mjsOutPath, output, 'utf8')
++          await fs.writeFile(mjsOutPath, output + `\n//# sourceMappingURL=${basename(mjsOutPath)}.map\n`, 'utf8')
++          await fs.writeFile(mjsOutPath + '.map', JSON.stringify(sourceMap), 'utf8')
+         }
+       })()
+     })
