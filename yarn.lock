@@ -10304,6 +10304,7 @@ __metadata:
     expo-status-bar: ~1.12.1
     react: 18.2.0
     react-native: 0.74.2
+    vxrn: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -17615,7 +17616,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"vxrn@1.1.126, vxrn@workspace:packages/vxrn":
+"vxrn@1.1.126, vxrn@workspace:^, vxrn@workspace:packages/vxrn":
   version: 0.0.0-use.local
   resolution: "vxrn@workspace:packages/vxrn"
   dependencies:
