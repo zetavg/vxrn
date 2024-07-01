@@ -7,7 +7,7 @@ export async function transformFlow(input: string) {
     babel.transform(
       input,
       {
-        presets: ['module:metro-react-native-babel-preset'],
+        presets: ['module:@react-native/babel-preset'],
       },
       (err: any, result) => {
         if (!result || err) rej(err || 'no res')

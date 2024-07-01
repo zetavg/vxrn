@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.21.8",
-    "metro-react-native-babel-preset": "^0.77.0"
+    "@react-native/babel-preset": "^0.74.84"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.6.3",
