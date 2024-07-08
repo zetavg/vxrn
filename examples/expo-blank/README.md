@@ -6,3 +6,5 @@ Originally from https://github.com/expo/expo/tree/main/templates/expo-template-b
 
 * Adds the `"vxrn": "workspace:^"` dependency in `package.json`, and changes relative NPM scripts to use `vxrn` instead of `expo`.
 * Removes `babel.config.js` which originally adds the `babel-preset-expo` preset, since vxrn has pre-configured Babel configurations that might conflict with `babel-preset-expo`.
+* Renames `App.js` to `App.jsx`.
+* Adds `src/entry-native.tsx`. (TODO: this may be temporary until we support specifying entry points via something like `vxrn.config.js`.)
