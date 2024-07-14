@@ -7,15 +7,20 @@ import { getPort } from 'get-port-please'
 
 const require = createRequire(import.meta.url)
 
-export type VXRNOptionsFilled = Awaited<ReturnType<typeof getOptionsFilled>>
+export type ResolvedVXRNConfig = Awaited<ReturnType<typeof resolveVXRNConfig>>
 
-export async function getOptionsFilled(
-  options: VXRNUserConfig,
+/**
+ * Fills the user config with defaults and resolves paths, etc.
+ *
+ * Note: unlike Vite's `resolveConfig`, this function isn't in charged of loading the config from the user config file.
+ */
+export async function resolveVXRNConfig(
+  userConfig: VXRNUserConfig,
   internal: { mode?: 'dev' | 'prod' } = { mode: 'dev' }
 ) {
-  const { host = '127.0.0.1', root = process.cwd(), entries, https } = options
+  const { host = '127.0.0.1', root = process.cwd(), entries, https } = userConfig
 
-  const defaultPort = options.port || (internal.mode === 'dev' ? 8081 : 3000)
+  const defaultPort = userConfig.port || (internal.mode === 'dev' ? 8081 : 3000)
 
   const port = await getPort({
     port: defaultPort,
@@ -33,7 +38,7 @@ export async function getOptionsFilled(
     readPackageJSON(),
   ])
   return {
-    ...options,
+    ...userConfig,
     protocol: https ? ('https:' as const) : ('http:' as const),
     entries: {
       native: './src/entry-native.tsx',

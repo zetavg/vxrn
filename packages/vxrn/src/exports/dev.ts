@@ -20,7 +20,7 @@ import {
   addConnectedNativeClient,
   removeConnectedNativeClient,
 } from '../utils/connectedNativeClients'
-import { getOptionsFilled } from '../config/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/getOptionsFilled'
 import { getReactNativeBundle } from '../utils/getReactNativeBundle'
 import { getViteServerConfig } from '../config/getViteServerConfig'
 import { hotUpdateCache } from '../utils/hotUpdateCache'
@@ -42,7 +42,7 @@ const { ensureDir } = FSExtra
 
 export const dev = async (optionsIn: VXRNUserConfig & { clean?: boolean }) => {
   const { clean: shouldClean, ...rest } = optionsIn
-  const options = await getOptionsFilled(rest)
+  const options = await resolveVXRNConfig(rest)
   const { port, root, cacheDir } = options
 
   if (shouldClean) {
