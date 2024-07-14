@@ -2,7 +2,7 @@ import { join } from 'node:path'
 import { readPackageJSON } from 'pkg-types'
 import { createRequire } from 'node:module'
 import FSExtra from 'fs-extra'
-import type { VXRNOptions } from './types'
+import type { VXRNUserConfig } from './types'
 import { getPort } from 'get-port-please'
 
 const require = createRequire(import.meta.url)
@@ -10,7 +10,7 @@ const require = createRequire(import.meta.url)
 export type VXRNOptionsFilled = Awaited<ReturnType<typeof getOptionsFilled>>
 
 export async function getOptionsFilled(
-  options: VXRNOptions,
+  options: VXRNUserConfig,
   internal: { mode?: 'dev' | 'prod' } = { mode: 'dev' }
 ) {
   const { host = '127.0.0.1', root = process.cwd(), entries, https } = options

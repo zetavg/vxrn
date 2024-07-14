@@ -7,9 +7,9 @@ import { isResponse } from '../utils/isResponse'
 import { isStatusRedirect } from '../utils/isStatus'
 import { resolveAPIRequest } from './resolveAPIRequest'
 import type { VXS } from './types'
-import type { VXRNOptions } from 'vxrn'
+import type { VXRNUserConfig } from 'vxrn'
 
-export async function serve(options: VXS.Options, vxrnOptions: VXRNOptions, app: Hono) {
+export async function serve(options: VXS.Options, vxrnOptions: VXRNUserConfig, app: Hono) {
   const isAPIRequest = new WeakMap<any, boolean>()
   const toAbsolute = (p) => Path.resolve(options.root || '.', p)
 
@@ -38,14 +38,14 @@ export async function serve(options: VXS.Options, vxrnOptions: VXRNOptions, app:
           () =>
             import(apiFile).catch((err) => {
               console.error(`\n [vxs] Error importing API route at ${apiFile}:
-         
+
     ${err}
 
     If this is an import error, you can likely fix this by adding this dependency to
     the "optimizeDeps.include" array in your vite.config.ts.
 
     🐞 For a better error message run "node" and enter:
-    
+
     import('${apiFile}')\n\n`)
               return {}
             }),

@@ -1,8 +1,8 @@
 import type { Hono } from 'hono'
-import type { AfterBuildProps as VXRNAfterBuildProps, VXRNOptions } from 'vxrn'
+import type { AfterBuildProps as VXRNAfterBuildProps, VXRNUserConfig } from 'vxrn'
 
 export namespace VXS {
-  export type Options = Omit<VXRNOptions, keyof PluginOptions> & PluginOptions
+  export type Options = Omit<VXRNUserConfig, keyof PluginOptions> & PluginOptions
 
   export type RouteMode = 'ssg' | 'spa'
 

@@ -1,7 +1,7 @@
 import type { UserConfig } from 'vite';
 import type { OutputAsset, OutputChunk } from 'rollup';
-import type { VXRNOptions } from './config/types';
-export type { VXRNOptions };
+import type { VXRNUserConfig } from './config/types';
+export type { VXRNUserConfig };
 type RollupOutputList = [OutputChunk, ...(OutputChunk | OutputAsset)[]];
 export type BuildArgs = {
     step?: string;
@@ -9,7 +9,7 @@ export type BuildArgs = {
     analyze?: boolean;
 };
 export type AfterBuildProps = {
-    options: VXRNOptions;
+    options: VXRNUserConfig;
     clientOutput: RollupOutputList;
     serverOutput: RollupOutputList;
     webBuildConfig: UserConfig;

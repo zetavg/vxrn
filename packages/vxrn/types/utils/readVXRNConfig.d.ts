@@ -1,3 +1,3 @@
-import type { VXRNOptions } from '../types';
-export declare function readVXRNOptions(): Promise<VXRNOptions>;
+import type { VXRNUserConfig } from '../types';
+export declare function readVXRNOptions(): Promise<VXRNUserConfig>;
 //# sourceMappingURL=readVXRNConfig.d.ts.map

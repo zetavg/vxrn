@@ -1,5 +1,5 @@
-import type { BuildArgs, VXRNOptions } from '../types';
-export declare const build: (optionsIn: VXRNOptions, buildArgs?: BuildArgs) => Promise<{
+import type { BuildArgs, VXRNUserConfig } from '../types';
+export declare const build: (optionsIn: VXRNUserConfig, buildArgs?: BuildArgs) => Promise<{
     options: {
         protocol: "https:" | "http:";
         entries: {
@@ -21,7 +21,7 @@ export declare const build: (optionsIn: VXRNOptions, buildArgs?: BuildArgs) => P
         https?: boolean | undefined;
         flow?: import("@vxrn/vite-flow").Options | undefined;
         afterBuild?: ((props: import("..").AfterBuildProps) => void | Promise<void>) | undefined;
-        afterServerStart?: ((options: VXRNOptions, app: import("hono").Hono<import("hono").Env, import("hono/types").BlankSchema, "/">) => void | Promise<void>) | undefined;
+        afterServerStart?: ((options: VXRNUserConfig, app: import("hono").Hono<import("hono").Env, import("hono/types").BlankSchema, "/">) => void | Promise<void>) | undefined;
     };
     buildArgs: BuildArgs;
     clientOutput: any;
