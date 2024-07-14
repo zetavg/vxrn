@@ -1,6 +1,6 @@
-import type { VXRNOptions } from './types';
+import type { VXRNUserConfig } from './types';
 export type VXRNOptionsFilled = Awaited<ReturnType<typeof getOptionsFilled>>;
-export declare function getOptionsFilled(options: VXRNOptions, internal?: {
+export declare function getOptionsFilled(options: VXRNUserConfig, internal?: {
     mode?: 'dev' | 'prod';
 }): Promise<{
     protocol: "https:" | "http:";
@@ -21,7 +21,7 @@ export declare function getOptionsFilled(options: VXRNOptions, internal?: {
     https?: boolean | undefined;
     flow?: import("@vxrn/vite-flow").Options | undefined;
     afterBuild?: ((props: import("..").AfterBuildProps) => void | Promise<void>) | undefined;
-    afterServerStart?: ((options: VXRNOptions, app: import("hono").Hono<import("hono").Env, import("hono/types").BlankSchema, "/">) => void | Promise<void>) | undefined;
+    afterServerStart?: ((options: VXRNUserConfig, app: import("hono").Hono<import("hono").Env, import("hono/types").BlankSchema, "/">) => void | Promise<void>) | undefined;
 }>;
 type State = {
     applyPatches?: boolean;
