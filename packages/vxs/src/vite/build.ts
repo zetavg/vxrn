@@ -9,7 +9,7 @@ import { nodeExternals } from 'rollup-plugin-node-externals'
 import { mergeConfig, build as viteBuild, type InlineConfig } from 'vite'
 import {
   getOptimizeDeps,
-  getOptionsFilled,
+  resolveVXRNConfig,
   type AfterBuildProps,
   type ClientManifestEntry,
 } from 'vxrn'
@@ -37,7 +37,7 @@ const { ensureDir, readFile, outputFile } = FSExtra
 
 export async function build(props: AfterBuildProps) {
   const userOptions = getUserVXSOptions(props.webBuildConfig)
-  const options = await getOptionsFilled(props.options)
+  const options = await resolveVXRNConfig(props.options)
   const toAbsolute = (p) => Path.resolve(options.root, p)
 
   const manifest = getManifest(join(options.root, 'app'))!
@@ -349,10 +349,10 @@ export async function build(props: AfterBuildProps) {
 ${errMsg}
 
   loaderData:
-  
+
 ${JSON.stringify(loaderData || null, null, 2)}
   params:
-  
+
 ${JSON.stringify(params || null, null, 2)}`
         )
         console.error(err)

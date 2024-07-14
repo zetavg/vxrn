@@ -2,7 +2,7 @@ import { serve as honoServe } from '@hono/node-server'
 
 import type { VXRNUserConfig } from '../types'
 import { createProdServer } from './createServer'
-import { resolveVXRNConfig } from '../config/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/resolveVXRNConfig'
 
 export const serve = async (optionsIn: VXRNUserConfig) => {
   const options = await resolveVXRNConfig(optionsIn, { mode: 'prod' })

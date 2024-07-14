@@ -1,6 +1,11 @@
 import type { VXRNUserConfig } from './types';
 export type ResolvedVXRNConfig = Awaited<ReturnType<typeof resolveVXRNConfig>>;
-export declare function resolveVXRNConfig(options: VXRNUserConfig, internal?: {
+/**
+ * Fills the user config with defaults and resolves paths, etc.
+ *
+ * Note: unlike Vite's `resolveConfig`, this function isn't in charged of loading the config from the user config file.
+ */
+export declare function resolveVXRNConfig(userConfig: VXRNUserConfig, internal?: {
     mode?: 'dev' | 'prod';
 }): Promise<{
     protocol: "https:" | "http:";
@@ -27,4 +32,4 @@ type State = {
     applyPatches?: boolean;
 };
 export {};
-//# sourceMappingURL=getOptionsFilled.d.ts.map
+//# sourceMappingURL=resolveVXRNConfig.d.ts.map

@@ -20,7 +20,7 @@ import {
   addConnectedNativeClient,
   removeConnectedNativeClient,
 } from '../utils/connectedNativeClients'
-import { resolveVXRNConfig } from '../config/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/resolveVXRNConfig'
 import { getReactNativeBundle } from '../utils/getReactNativeBundle'
 import { getViteServerConfig } from '../config/getViteServerConfig'
 import { hotUpdateCache } from '../utils/hotUpdateCache'

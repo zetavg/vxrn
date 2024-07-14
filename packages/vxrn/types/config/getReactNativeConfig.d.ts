@@ -1,4 +1,4 @@
-import type { ResolvedVXRNConfig } from './getOptionsFilled';
+import type { ResolvedVXRNConfig } from './resolveVXRNConfig';
 export declare function getReactNativeConfig(options: ResolvedVXRNConfig, viteRNClientPlugin: any): Promise<{
     plugins: any[];
     appType: "custom";

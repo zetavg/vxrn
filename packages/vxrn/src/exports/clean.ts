@@ -2,7 +2,7 @@ import FSExtra from 'fs-extra'
 import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { VXRNUserConfig } from '../types'
-import { resolveVXRNConfig } from '../config/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/resolveVXRNConfig'
 
 const { ensureDir } = FSExtra
 
