@@ -1,4 +1,4 @@
-import type { VXRNOptions } from '../types';
+import type { VXRNOptions } from './types';
 export type VXRNOptionsFilled = Awaited<ReturnType<typeof getOptionsFilled>>;
 export declare function getOptionsFilled(options: VXRNOptions, internal?: {
     mode?: 'dev' | 'prod';

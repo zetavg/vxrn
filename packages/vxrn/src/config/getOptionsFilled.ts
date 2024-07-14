@@ -2,7 +2,7 @@ import { join } from 'node:path'
 import { readPackageJSON } from 'pkg-types'
 import { createRequire } from 'node:module'
 import FSExtra from 'fs-extra'
-import type { VXRNOptions } from '../types'
+import type { VXRNOptions } from './types'
 import { getPort } from 'get-port-please'
 
 const require = createRequire(import.meta.url)
