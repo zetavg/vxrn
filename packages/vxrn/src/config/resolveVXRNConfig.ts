@@ -57,6 +57,19 @@ export async function resolveVXRNConfig(
   }
 }
 
+/**
+ * Actually same as `resolveVXRNConfig`, but with refined type to handle additional properties nicely.
+ */
+export async function resolveVXRNConfigWithAdditionalProperties<T>(
+  userConfigWithAdditionalProperties: VXRNUserConfig & T
+): Promise<ResolvedVXRNConfig & T> {
+  // This object spread is only used to make TS happy and unnecessary for the runtime as the `resolveVXRNConfig` already spreads the input object into the return object.
+  return {
+    ...userConfigWithAdditionalProperties,
+    ...(await resolveVXRNConfig(userConfigWithAdditionalProperties)),
+  }
+}
+
 type State = {
   applyPatches?: boolean
 }

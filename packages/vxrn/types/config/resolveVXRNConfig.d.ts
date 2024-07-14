@@ -28,6 +28,10 @@ export declare function resolveVXRNConfig(userConfig: VXRNUserConfig, internal?:
     afterBuild?: ((props: import("..").AfterBuildProps) => void | Promise<void>) | undefined;
     afterServerStart?: ((options: VXRNUserConfig, app: import("hono").Hono<import("hono").Env, import("hono/types").BlankSchema, "/">) => void | Promise<void>) | undefined;
 }>;
+/**
+ * Actually same as `resolveVXRNConfig`, but with refined type to handle additional properties nicely.
+ */
+export declare function resolveVXRNConfigWithAdditionalProperties<T>(userConfigWithAdditionalProperties: VXRNUserConfig & T): Promise<ResolvedVXRNConfig & T>;
 type State = {
     applyPatches?: boolean;
 };
