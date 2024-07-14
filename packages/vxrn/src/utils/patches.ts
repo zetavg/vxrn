@@ -1,7 +1,7 @@
 import findNodeModules from 'find-node-modules'
 import { join } from 'node:path'
 import FSExtra from 'fs-extra'
-import type { VXRNOptionsFilled } from './getOptionsFilled'
+import type { VXRNOptionsFilled } from '../config/getOptionsFilled'
 
 const patches = [
   {
