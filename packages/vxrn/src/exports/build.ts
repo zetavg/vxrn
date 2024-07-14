@@ -11,9 +11,9 @@ import {
 } from 'vite'
 import { analyzer } from 'vite-bundle-analyzer'
 import type { BuildArgs, VXRNOptions } from '../types'
-import { getBaseViteConfig } from '../utils/getBaseViteConfig'
-import { getOptimizeDeps } from '../utils/getOptimizeDeps'
-import { getOptionsFilled } from '../utils/getOptionsFilled'
+import { getBaseViteConfig } from '../config/getBaseViteConfig'
+import { getOptimizeDeps } from '../config/getOptimizeDeps'
+import { getOptionsFilled } from '../config/getOptionsFilled'
 
 const { existsSync } = FSExtra
 

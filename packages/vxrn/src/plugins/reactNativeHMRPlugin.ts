@@ -1,7 +1,7 @@
 import { swcTransform, transformForBuild } from '@vxrn/vite-native-swc'
 import { parse } from 'es-module-lexer'
+import type { VXRNOptionsFilled } from '../config/getOptionsFilled'
 import { connectedNativeClients } from '../utils/connectedNativeClients'
-import type { VXRNOptionsFilled } from '../utils/getOptionsFilled'
 import { entryRoot } from '../utils/getReactNativeBundle'
 import { getVitePath } from '../utils/getVitePath'
 import { hotUpdateCache } from '../utils/hotUpdateCache'

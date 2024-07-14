@@ -7,7 +7,7 @@ import { reactNativeCommonJsPlugin } from '../plugins/reactNativeCommonJsPlugin'
 import { dedupe } from './getBaseViteConfig'
 import { getOptimizeDeps } from './getOptimizeDeps'
 import type { VXRNOptionsFilled } from './getOptionsFilled'
-import { swapPrebuiltReactModules } from './swapPrebuiltReactModules'
+import { swapPrebuiltReactModules } from '../utils/swapPrebuiltReactModules'
 
 export async function getReactNativeConfig(options: VXRNOptionsFilled, viteRNClientPlugin: any) {
   const { root, port } = options

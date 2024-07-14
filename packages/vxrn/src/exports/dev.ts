@@ -20,9 +20,9 @@ import {
   addConnectedNativeClient,
   removeConnectedNativeClient,
 } from '../utils/connectedNativeClients'
-import { getOptionsFilled } from '../utils/getOptionsFilled'
+import { getOptionsFilled } from '../config/getOptionsFilled'
 import { getReactNativeBundle } from '../utils/getReactNativeBundle'
-import { getViteServerConfig } from '../utils/getViteServerConfig'
+import { getViteServerConfig } from '../config/getViteServerConfig'
 import { hotUpdateCache } from '../utils/hotUpdateCache'
 import { checkPatches } from '../utils/patches'
 import { clean } from './clean'
