@@ -13,7 +13,7 @@ import { analyzer } from 'vite-bundle-analyzer'
 import type { BuildArgs, VXRNUserConfig } from '../types'
 import { getBaseViteConfig } from '../config/getBaseViteConfig'
 import { getOptimizeDeps } from '../config/getOptimizeDeps'
-import { getOptionsFilled } from '../config/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/getOptionsFilled'
 
 const { existsSync } = FSExtra
 
@@ -42,7 +42,7 @@ export const build = async (optionsIn: VXRNUserConfig, buildArgs: BuildArgs = {}
   process.env.NODE_ENV = 'production'
 
   const [options, viteConfig] = await Promise.all([
-    getOptionsFilled(optionsIn),
+    resolveVXRNConfig(optionsIn),
     loadConfigFromFile({
       command: 'build',
       mode: 'prod',

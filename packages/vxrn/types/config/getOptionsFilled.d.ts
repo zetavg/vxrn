@@ -1,6 +1,6 @@
 import type { VXRNUserConfig } from './types';
-export type VXRNOptionsFilled = Awaited<ReturnType<typeof getOptionsFilled>>;
-export declare function getOptionsFilled(options: VXRNUserConfig, internal?: {
+export type ResolvedVXRNConfig = Awaited<ReturnType<typeof resolveVXRNConfig>>;
+export declare function resolveVXRNConfig(options: VXRNUserConfig, internal?: {
     mode?: 'dev' | 'prod';
 }): Promise<{
     protocol: "https:" | "http:";

@@ -2,7 +2,7 @@ import FSExtra from 'fs-extra'
 import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { VXRNUserConfig } from '../types'
-import { getOptionsFilled } from '../config/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/getOptionsFilled'
 
 const { ensureDir } = FSExtra
 
@@ -17,7 +17,7 @@ const { ensureDir } = FSExtra
  */
 
 export const clean = async (rest: VXRNUserConfig) => {
-  const options = await getOptionsFilled(rest)
+  const options = await resolveVXRNConfig(rest)
   const { root } = options
 
   console.info(` [vxrn] cleaning`)
