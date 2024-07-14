@@ -4,7 +4,7 @@ import { expoManifestRequestHandlerPlugin } from '../plugins/expoManifestRequest
 import { coerceToArray } from '../utils/coerceToArray'
 import { getBaseViteConfig } from './getBaseViteConfig'
 import { getOptimizeDeps } from './getOptimizeDeps'
-import type { ResolvedVXRNConfig } from './getOptionsFilled'
+import type { ResolvedVXRNConfig } from './resolveVXRNConfig'
 import { uniq } from '../utils/uniq'
 import mkcert from 'vite-plugin-mkcert'
 

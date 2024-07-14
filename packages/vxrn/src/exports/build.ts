@@ -13,7 +13,7 @@ import { analyzer } from 'vite-bundle-analyzer'
 import type { BuildArgs, VXRNUserConfig } from '../types'
 import { getBaseViteConfig } from '../config/getBaseViteConfig'
 import { getOptimizeDeps } from '../config/getOptimizeDeps'
-import { resolveVXRNConfig } from '../config/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/resolveVXRNConfig'
 
 const { existsSync } = FSExtra
 
