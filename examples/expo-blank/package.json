@@ -1,7 +1,7 @@
 {
   "name": "expo-blank-app",
   "version": "1.0.0",
-  "main": "expo/AppEntry.js",
+  "main": "src/entry-native.tsx",
   "scripts": {
     "start": "vxrn dev",
     "dev": "yarn start",

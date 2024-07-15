@@ -9,3 +9,4 @@ Originally from https://github.com/expo/expo/tree/main/templates/expo-template-b
 * Renames `App.js` to `App.jsx`.
 * Adds `src/entry-native.tsx`. (TODO: this may be temporary until we support specifying entry points via something like `vxrn.config.js`.)
 * `App.jsx` is moved into `src/` to avoid some issues (TODO: may need to look into & fix this in vxrn).
+* The `main` field in `package.json` is updated to point to `src/entry-native.tsx`. This is not necessary for VXRN but is done so that we can also use the Expo CLI to run the project for testing.
