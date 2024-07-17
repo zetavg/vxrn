@@ -10,10 +10,10 @@ import {
   type UserConfig,
 } from 'vite'
 import { analyzer } from 'vite-bundle-analyzer'
-import type { BuildArgs, VXRNOptions } from '../types'
-import { getBaseViteConfig } from '../utils/getBaseViteConfig'
-import { getOptimizeDeps } from '../utils/getOptimizeDeps'
-import { getOptionsFilled } from '../utils/getOptionsFilled'
+import type { BuildArgs, VXRNUserConfig } from '../types'
+import { getBaseViteConfig } from '../config/getBaseViteConfig'
+import { getOptimizeDeps } from '../config/getOptimizeDeps'
+import { resolveVXRNConfig } from '../config/resolveVXRNConfig'
 
 const { existsSync } = FSExtra
 
@@ -37,12 +37,12 @@ const disableOptimizationConfig = {
   },
 } satisfies UserConfig
 
-export const build = async (optionsIn: VXRNOptions, buildArgs: BuildArgs = {}) => {
+export const build = async (optionsIn: VXRNUserConfig, buildArgs: BuildArgs = {}) => {
   // set NODE_ENV, do before loading vite.config (see loadConfigFromFile)
   process.env.NODE_ENV = 'production'
 
   const [options, viteConfig] = await Promise.all([
-    getOptionsFilled(optionsIn),
+    resolveVXRNConfig(optionsIn),
     loadConfigFromFile({
       command: 'build',
       mode: 'prod',

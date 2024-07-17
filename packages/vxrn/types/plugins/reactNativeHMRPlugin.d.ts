@@ -1,5 +1,5 @@
-import type { VXRNOptionsFilled } from '../utils/getOptionsFilled';
-export declare function reactNativeHMRPlugin({ root }: VXRNOptionsFilled): {
+import type { ResolvedVXRNConfig } from '../config/resolveVXRNConfig';
+export declare function reactNativeHMRPlugin({ root }: ResolvedVXRNConfig): {
     name: string;
     handleHotUpdate(this: void, { read, modules, file }: import("vite").HmrContext): Promise<void>;
 };

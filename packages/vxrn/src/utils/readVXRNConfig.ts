@@ -1,9 +1,9 @@
 import FSExtra from 'fs-extra'
-import type { VXRNOptions } from '../types'
+import type { VXRNUserConfig } from '../types'
 import { join } from 'node:path'
 import { build } from 'esbuild'
 
-export async function readVXRNOptions(): Promise<VXRNOptions> {
+export async function readVXRNOptions(): Promise<VXRNUserConfig> {
   if (!(await FSExtra.pathExists('vxrn.config.ts'))) {
     return {}
   }

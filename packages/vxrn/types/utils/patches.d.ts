@@ -1,3 +1,3 @@
-import type { VXRNOptionsFilled } from './getOptionsFilled';
-export declare function checkPatches(options: VXRNOptionsFilled): Promise<void>;
+import type { ResolvedVXRNConfig } from '../config/resolveVXRNConfig';
+export declare function checkPatches(options: ResolvedVXRNConfig): Promise<void>;
 //# sourceMappingURL=patches.d.ts.map

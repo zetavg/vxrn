@@ -1,5 +1,5 @@
-import type { VXRNOptionsFilled } from './getOptionsFilled';
-export declare function getReactNativeConfig(options: VXRNOptionsFilled, viteRNClientPlugin: any): Promise<{
+import type { ResolvedVXRNConfig } from './resolveVXRNConfig';
+export declare function getReactNativeConfig(options: ResolvedVXRNConfig, viteRNClientPlugin: any): Promise<{
     plugins: any[];
     appType: "custom";
     root: string;

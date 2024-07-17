@@ -1,14 +1,14 @@
 import { loadConfigFromFile, mergeConfig, type InlineConfig, type UserConfig } from 'vite'
 import { reactNativeHMRPlugin } from '../plugins/reactNativeHMRPlugin'
 import { expoManifestRequestHandlerPlugin } from '../plugins/expoManifestRequestHandlerPlugin'
-import { coerceToArray } from './coerceToArray'
+import { coerceToArray } from '../utils/coerceToArray'
 import { getBaseViteConfig } from './getBaseViteConfig'
 import { getOptimizeDeps } from './getOptimizeDeps'
-import type { VXRNOptionsFilled } from './getOptionsFilled'
-import { uniq } from './uniq'
+import type { ResolvedVXRNConfig } from './resolveVXRNConfig'
+import { uniq } from '../utils/uniq'
 import mkcert from 'vite-plugin-mkcert'
 
-export async function getViteServerConfig(config: VXRNOptionsFilled) {
+export async function getViteServerConfig(config: ResolvedVXRNConfig) {
   const { root, host, https, port } = config
   const { optimizeDeps } = getOptimizeDeps('serve')
   const { config: userViteConfig } =

@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import type { VXRNOptions } from '../types';
+import type { VXRNUserConfig } from '../types';
 /**
  * The main entry point for dev mode
  *
@@ -9,7 +9,7 @@ import type { VXRNOptions } from '../types';
  *  - clientTreeShakePlugin handles loaders/transforms
  *
  */
-export declare const dev: (optionsIn: VXRNOptions & {
+export declare const dev: (optionsIn: VXRNUserConfig & {
     clean?: boolean;
 }) => Promise<{
     server: import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>;

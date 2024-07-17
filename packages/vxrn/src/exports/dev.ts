@@ -14,15 +14,15 @@ import { createServer as nodeCreateServer } from 'node:http'
 import { createServer, resolveConfig } from 'vite'
 import { WebSocket } from 'ws'
 import { clientInjectionsPlugin } from '../plugins/clientInjectPlugin'
-import type { VXRNOptions } from '../types'
+import type { VXRNUserConfig } from '../types'
 import { bindKeypressInput } from '../utils/bindKeypressInput'
 import {
   addConnectedNativeClient,
   removeConnectedNativeClient,
 } from '../utils/connectedNativeClients'
-import { getOptionsFilled } from '../utils/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/resolveVXRNConfig'
 import { getReactNativeBundle } from '../utils/getReactNativeBundle'
-import { getViteServerConfig } from '../utils/getViteServerConfig'
+import { getViteServerConfig } from '../config/getViteServerConfig'
 import { hotUpdateCache } from '../utils/hotUpdateCache'
 import { checkPatches } from '../utils/patches'
 import { clean } from './clean'
@@ -40,9 +40,9 @@ const { ensureDir } = FSExtra
  *
  */
 
-export const dev = async (optionsIn: VXRNOptions & { clean?: boolean }) => {
+export const dev = async (optionsIn: VXRNUserConfig & { clean?: boolean }) => {
   const { clean: shouldClean, ...rest } = optionsIn
-  const options = await getOptionsFilled(rest)
+  const options = await resolveVXRNConfig(rest)
   const { port, root, cacheDir } = options
 
   if (shouldClean) {

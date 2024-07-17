@@ -1,14 +1,15 @@
-import type { Options as FlowOptions } from '@vxrn/vite-flow'
-import type { Hono } from 'hono'
-import type { OutputAsset, OutputChunk } from 'rollup'
 import type { UserConfig } from 'vite'
+import type { OutputAsset, OutputChunk } from 'rollup'
+import type { VXRNUserConfig } from './config/types'
+
+export type { VXRNUserConfig }
 
 type RollupOutputList = [OutputChunk, ...(OutputChunk | OutputAsset)[]]
 
 export type BuildArgs = { step?: string; only?: string; analyze?: boolean }
 
 export type AfterBuildProps = {
-  options: VXRNOptions
+  options: VXRNUserConfig
   clientOutput: RollupOutputList
   serverOutput: RollupOutputList
   webBuildConfig: UserConfig
@@ -27,33 +28,6 @@ export type ClientManifestEntry = {
   name: string // _user_
   imports: string[]
   css?: string[]
-}
-
-export type VXRNOptions = {
-  /**
-   * The entry points to your app. For web, it defaults to using your `root` to look for an index.html
-   *
-   * Defaults:
-   *   native: ./src/entry-native.tsx
-   */
-  entries?: {
-    native?: string
-    web?: string
-  }
-  root?: string
-  host?: string
-  port?: number
-
-  /**
-   * Uses mkcert to create a self-signed certificate
-   */
-  https?: boolean
-
-  flow?: FlowOptions
-
-  // for hooking into things
-  afterBuild?: (props: AfterBuildProps) => void | Promise<void>
-  afterServerStart?: (options: VXRNOptions, app: Hono) => void | Promise<void>
 }
 
 export type HMRListener = (update: { file: string; contents: string }) => void

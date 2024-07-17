@@ -3,8 +3,8 @@ import FSExtra from 'fs-extra'
 import { readFile } from 'node:fs/promises'
 import { dirname, join, relative } from 'node:path'
 import { createBuilder } from 'vite'
-import type { VXRNOptionsFilled } from './getOptionsFilled'
-import { getReactNativeConfig } from './getReactNativeConfig'
+import type { ResolvedVXRNConfig } from '../config/resolveVXRNConfig'
+import { getReactNativeConfig } from '../config/getReactNativeConfig'
 import { isBuildingNativeBundle, setIsBuildingNativeBundle } from './isBuildingNativeBundle'
 import { resolveFile } from './resolveFile'
 import { getPrebuilds, prebuildReactNativeModules } from './swapPrebuiltReactModules'
@@ -14,7 +14,7 @@ const { pathExists } = FSExtra
 // used for normalizing hot reloads
 export let entryRoot = ''
 
-export async function getReactNativeBundle(options: VXRNOptionsFilled, viteRNClientPlugin: any) {
+export async function getReactNativeBundle(options: ResolvedVXRNConfig, viteRNClientPlugin: any) {
   if (process.env.LOAD_TMP_BUNDLE) {
     // for easier quick testing things:
     const tmpBundle = join(process.cwd(), 'bundle.tmp.js')

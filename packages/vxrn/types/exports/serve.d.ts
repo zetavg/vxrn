@@ -1,3 +1,3 @@
-import type { VXRNOptions } from '../types';
-export declare const serve: (optionsIn: VXRNOptions) => Promise<void>;
+import type { VXRNUserConfig } from '../types';
+export declare const serve: (optionsIn: VXRNUserConfig) => Promise<void>;
 //# sourceMappingURL=serve.d.ts.map

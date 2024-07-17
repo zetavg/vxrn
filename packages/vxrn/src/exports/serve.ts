@@ -1,11 +1,11 @@
 import { serve as honoServe } from '@hono/node-server'
 
-import type { VXRNOptions } from '../types'
+import type { VXRNUserConfig } from '../types'
 import { createProdServer } from './createServer'
-import { getOptionsFilled } from '../utils/getOptionsFilled'
+import { resolveVXRNConfig } from '../config/resolveVXRNConfig'
 
-export const serve = async (optionsIn: VXRNOptions) => {
-  const options = await getOptionsFilled(optionsIn, { mode: 'prod' })
+export const serve = async (optionsIn: VXRNUserConfig) => {
+  const options = await resolveVXRNConfig(optionsIn, { mode: 'prod' })
   const app = await createProdServer(options)
 
   // strange prevents a cant listen on port issue
