@@ -99,7 +99,7 @@ export function reactNativeCommonJsPlugin(options: {
                         let out = ''
                         if (e.ln !== e.n) {
                           // forces the "as x" to be referenced so it gets exported
-                          out += `__ignore = typeof ${e.n} === 'undefined' ? 0 : 0;`
+                          out += `let __ignore = typeof ${e.n} === 'undefined' ? 0 : 0;` // not sure if adding `let` is a correct move but at least it make things work while running the bundle in Node.js
                         }
                         out += `globalThis.____forceExport = ${e.ln}`
                         return out

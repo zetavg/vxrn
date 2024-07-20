@@ -49,7 +49,7 @@ export async function getReactNativeBundle(options: VXRNOptionsFilled, viteRNCli
     throw `❌`
   }
 
-  let appCode = buildOutput.output
+  let appCodeParts = buildOutput.output
     // entry last
     .sort((a, b) => (a['isEntry'] ? 1 : -1))
     .map((outputModule) => {
@@ -84,7 +84,8 @@ ${
     ? `
 // run entry
 const __require = createRequire(":root:", {})
-__require("react-native")
+// Commented out for testing in a Node.js environment
+// __require("react-native")
 __require("${id}")
 `
     : ''
@@ -92,7 +93,8 @@ __require("${id}")
 `
       }
     })
-    .join('\n')
+
+  let appCode = appCodeParts.join('\n')
 
   if (!appCode) {
     throw `❌`

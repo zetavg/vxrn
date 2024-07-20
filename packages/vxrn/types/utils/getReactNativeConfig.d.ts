@@ -34,6 +34,7 @@ export declare function getReactNativeConfig(options: VXRNOptionsFilled, viteRNC
             output: {
                 preserveModules: true;
                 format: "cjs";
+                dir: string;
             };
         };
     };

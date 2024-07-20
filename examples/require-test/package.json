@@ -1,0 +1,19 @@
+{
+  "name": "require-test",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "./polyfills"
+  ],
+  "scripts": {
+    "dev": "vxrn dev"
+  },
+  "dependencies": {
+    "color-convert": "2.0.1"
+  },
+  "devDependencies": {
+    "vite": "6.0.0-alpha.18",
+    "vxrn": "1.1.144"
+  }
+}

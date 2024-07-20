@@ -113,6 +113,8 @@ export async function getReactNativeConfig(options: VXRNOptionsFilled, viteRNCli
         output: {
           preserveModules: true,
           format: 'cjs',
+          // For testing, can be used to compare rollup output with RN bundle
+          dir: `${root}/z-test-rollup-output`,
         },
       },
     },
