@@ -34,19 +34,29 @@ function printError(err) {
   return `${err instanceof Error ? `${err.message}\n${err.stack}` : err}`
 }
 
+const runningModules = new Map()
+
 function __getRequire(absPath) {
   absPath = ___vxrnAbsoluteToRelative___[absPath] || absPath
 
   if (!__cachedModules[absPath]) {
     const runModule = ___modules___[absPath]
 
+    // do not run again if the module is already running, avoids infinite stacks on circular dependencies
+    if (runningModules.has(absPath)) {
+      return runningModules.get(absPath).exports
+    }
+
     if (runModule) {
       const mod = { exports: {} }
+      runningModules.set(absPath, mod)
       try {
         runModule(mod.exports, mod)
       } catch (err) {
         console.error(`Error running module: "${absPath}"\n${printError(err)}`)
         return {}
+      } finally {
+        runningModules.delete(absPath)
       }
 
       __cachedModules[absPath] = mod.exports || mod
