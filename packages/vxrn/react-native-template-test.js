@@ -209,3 +209,53 @@ global.ErrorUtils = {
     console.log('err' + err['message'] + err['stack'])
   },
 }
+
+// ------ Below is repro of circular dependency issue ------
+
+// Run me:
+//
+// ```
+// node packages/vxrn/react-native-template-test.js
+// ```
+
+___modules___['index.js'] = function moduleFnIndex(exports, module) {
+  const require = createRequire('index.js', {
+    './fnA': 'fnA.js',
+    './fnB': 'fnB.js',
+  })
+  const fnA = require('./fnA.js')
+  const fnB = require('./fnB.js')
+  exports.fnA = fnA.default
+  exports.fnB = fnB.default
+}
+
+___modules___['fnA.js'] = function moduleFnIndex(exports, module) {
+  const require = createRequire('index.js', {})
+  const fnA = () => {
+    console.log('Hi! This is FnA.')
+  }
+  exports.default = fnA
+}
+
+___modules___['fnB.js'] = function moduleFnIndex(exports, module) {
+  const require = createRequire('index.js', {
+    index: 'index.js',
+  })
+  const index = require('index')
+  const fnB = () => {
+    console.log("Hi! This is FnB. I'm going to call FnA...")
+    index.fnA()
+  }
+  exports.default = fnB
+}
+
+___modules___['app.js'] = function moduleFnIndex(exports, module) {
+  const require = createRequire('app.js', {
+    index: 'index.js',
+  })
+  const index = require('index')
+  index.fnB()
+}
+
+const __require = createRequire(':root:', {})
+__require('app.js')
