@@ -50,6 +50,14 @@ const parsers: Record<string, ParserConfig> = {
   '.mdx': { syntax: 'ecmascript', jsx: true },
 }
 
+const SWC_ENV = {
+  targets: {
+    node: '4',
+  },
+  include: [],
+  exclude: ['transform-spread', 'transform-destructuring', 'transform-object-rest-spread'],
+}
+
 function getParser(id: string) {
   if (id.endsWith('vxs-entry-native')) {
     return parsers['.tsx']
@@ -109,7 +117,6 @@ export default (_options?: Options): PluginOption[] => {
                       configFile: false,
                       sourceMaps: true,
                       jsc: {
-                        target: 'es5',
                         parser,
                         transform: {
                           useDefineForClassFields: true,
@@ -120,6 +127,7 @@ export default (_options?: Options): PluginOption[] => {
                           },
                         },
                       },
+                      env: SWC_ENV,
                     })
 
                     hasTransformed[id] = true
@@ -176,7 +184,7 @@ export async function swcTransform(_id: string, code: string, options: Options) 
   // only change for now:
   const refresh = true
 
-  const result = await transformWithOptions(id, code, 'es5', options, {
+  const result = await transformWithOptions(id, code, options, {
     refresh,
     development: true,
     runtime: 'automatic',
@@ -201,7 +209,6 @@ export async function swcTransform(_id: string, code: string, options: Options) 
 export const transformWithOptions = async (
   id: string,
   code: string,
-  target: JscTarget,
   options: Options,
   reactConfig: ReactConfig
 ) => {
@@ -226,13 +233,13 @@ export const transformWithOptions = async (
         },
       }),
       jsc: {
-        target,
         parser,
         transform: {
           useDefineForClassFields: true,
           react: reactConfig,
         },
       },
+      env: SWC_ENV,
     } satisfies SWCOptions
 
     result = await transform(code, transformOptions)
