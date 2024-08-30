@@ -3,6 +3,7 @@ import FSExtra from 'fs-extra'
 import { readFile } from 'node:fs/promises'
 import { dirname, join, relative } from 'node:path'
 import { createBuilder } from 'vite'
+import { cacheBuild } from 'rollup-cache'
 import type { VXRNOptionsFilled } from './getOptionsFilled'
 import { getReactNativeConfig } from './getReactNativeConfig'
 import { isBuildingNativeBundle, setIsBuildingNativeBundle } from './isBuildingNativeBundle'
@@ -10,6 +11,24 @@ import { resolveFile } from './resolveFile'
 import { getPrebuilds, prebuildReactNativeModules } from './swapPrebuiltReactModules'
 
 const { pathExists } = FSExtra
+
+const cacheConfig = {
+  name: 'react-native-bundle',
+  dependencies: [],
+  prebuild: [
+    '@tamagui/core',
+    '@tamagui/lucide-icons',
+    '@tamagui/one-theme',
+    'react-native-reanimated',
+    'react-native-web',
+    'tamagui',
+    'uuid',
+    'vxs',
+  ],
+  cachePlugins: [
+    'vite:react-swc',
+  ],
+}
 
 // used for normalizing hot reloads
 export let entryRoot = ''
@@ -41,9 +60,12 @@ export async function getReactNativeBundle(options: VXRNOptionsFilled, viteRNCli
   )
 
   // build app
-  const nativeBuildConfig = await getReactNativeConfig(options, viteRNClientPlugin)
+  const nativeBuildConfig: any = await getReactNativeConfig(options, viteRNClientPlugin)
 
-  const builder = await createBuilder(nativeBuildConfig)
+  nativeBuildConfig.output = {
+    file: join(options.cacheDir, 'bundle.js')
+  }
+  const builder = await createBuilder(cacheBuild(cacheConfig, nativeBuildConfig))
 
   const buildOutput = await builder.build(builder.environments.ios)
 
