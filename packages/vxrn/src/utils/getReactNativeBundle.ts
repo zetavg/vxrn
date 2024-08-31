@@ -14,6 +14,9 @@ const { pathExists } = FSExtra
 // used for normalizing hot reloads
 export let entryRoot = ''
 
+// TODO: need to separate the cache for different env
+let cache: any = true
+
 export async function getReactNativeBundle(options: VXRNOptionsFilled, viteRNClientPlugin: any) {
   entryRoot = options.root
 
@@ -45,7 +48,25 @@ export async function getReactNativeBundle(options: VXRNOptionsFilled, viteRNCli
 
   const builder = await createBuilder(nativeBuildConfig)
 
+  // See: https://rollupjs.org/configuration-options/#cache
+  builder.environments.ios.config.build.rollupOptions.cache = cache
+
   const buildOutput = await builder.build(builder.environments.ios)
+
+  /**
+   * Vite needs to be patched to expose the Rollup cache object.
+   *
+   * Change node_modules/vite/dist/node/chunks/dep-DXWVQosX.js:63643 to something like:
+   *
+   * ```
+   *      const returnValue = Array.isArray(outputs) ? res : res[0];
+   *      returnValue.cache = bundle.cache
+   *      return returnValue;
+   * ```
+   */
+  if ((buildOutput as any).cache) {
+    cache = (buildOutput as any).cache
+  }
 
   if (!('output' in buildOutput)) {
     throw `❌`
