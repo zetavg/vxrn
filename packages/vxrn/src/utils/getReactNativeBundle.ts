@@ -8,6 +8,7 @@ import { getReactNativeConfig } from './getReactNativeConfig'
 import { isBuildingNativeBundle, setIsBuildingNativeBundle } from './isBuildingNativeBundle'
 import { resolveFile } from './resolveFile'
 import { getPrebuilds, prebuildReactNativeModules } from './swapPrebuiltReactModules'
+import { buildEnvironment } from './fork/vite/build'
 
 const { pathExists } = FSExtra
 
@@ -45,7 +46,20 @@ export async function getReactNativeBundle(options: VXRNOptionsFilled, viteRNCli
 
   const builder = await createBuilder(nativeBuildConfig)
 
-  const buildOutput = await builder.build(builder.environments.ios)
+  const environment = builder.environments.ios
+
+  // To initially enable Rollup cache.
+  // See: https://rollupjs.org/configuration-options/#cache
+  if (!environment.config.build.rollupOptions.cache) {
+    environment.config.build.rollupOptions.cache = true
+  }
+
+  // We are using a forked version of the Vite internal function `buildEnvironment` (which is what `builder.build` calls) that will return the Rollup cache object with the build output, and also with some performance improvements.
+  const buildOutput = await buildEnvironment(
+    environment.config,
+    environment
+  )
+  environment.config.build.rollupOptions.cache = buildOutput.cache
 
   if (!('output' in buildOutput)) {
     throw `❌`
