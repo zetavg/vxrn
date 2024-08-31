@@ -62,6 +62,7 @@
     "picocolors": "^1.0.0",
     "pkg-types": "^1.0.3",
     "rollup": "^4.21.0",
+    "rollup-cache": "^2.0.0",
     "semver": "^7.6.3",
     "vite": "6.0.0-alpha.18",
     "vite-bundle-analyzer": "^0.9.4",
