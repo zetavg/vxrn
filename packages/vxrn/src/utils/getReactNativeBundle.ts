@@ -2,7 +2,7 @@ import * as babel from '@babel/core'
 import FSExtra from 'fs-extra'
 import { readFile } from 'node:fs/promises'
 import { dirname, join, relative } from 'node:path'
-import { createBuilder } from 'vite'
+import { type Alias, createBuilder } from 'vite'
 import type { VXRNOptionsFilled } from './getOptionsFilled'
 import { getReactNativeConfig } from './getReactNativeConfig'
 import { isBuildingNativeBundle, setIsBuildingNativeBundle } from './isBuildingNativeBundle'
@@ -44,6 +44,18 @@ export async function getReactNativeBundle(options: VXRNOptionsFilled, viteRNCli
   const nativeBuildConfig = await getReactNativeConfig(options, viteRNClientPlugin)
 
   const builder = await createBuilder(nativeBuildConfig)
+
+  if (builder.config.resolve?.alias) {
+    builder.config.resolve.alias = builder.config.resolve.alias.filter(
+      filterOutAliasThatShouldNotBeThereForNative
+    )
+  }
+  if (builder.environments.ios.config.resolve?.alias) {
+    builder.environments.ios.config.resolve.alias =
+      builder.environments.ios.config.resolve.alias.filter(
+        filterOutAliasThatShouldNotBeThereForNative
+      )
+  }
 
   const buildOutput = await builder.build(builder.environments.ios)
 
@@ -127,4 +139,24 @@ __require("${id}")
   setIsBuildingNativeBundle(null)
 
   return out
+}
+
+const filterOutAliasThatShouldNotBeThereForNativeWarned = new Set<string | RegExp>()
+function warnAboutUnexpectedAliasOnce(alias: Alias) {
+  if (filterOutAliasThatShouldNotBeThereForNativeWarned.has(alias.find)) {
+    return
+  }
+
+  console.warn(
+    `⚠️ Unexpected alias "${JSON.stringify(alias)}" found in the build config for native. This should not be there and we will ignore that for you.`
+  )
+  filterOutAliasThatShouldNotBeThereForNativeWarned.add(alias.find)
+}
+function filterOutAliasThatShouldNotBeThereForNative(alias: Alias) {
+  if (alias.find === 'react-native' || alias.find === 'react-native-svg') {
+    warnAboutUnexpectedAliasOnce(alias)
+    return false
+  }
+
+  return true
 }
