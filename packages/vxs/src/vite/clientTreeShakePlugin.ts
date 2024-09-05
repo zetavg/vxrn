@@ -3,7 +3,7 @@ import { parse } from '@babel/parser'
 import BabelTraverse from '@babel/traverse'
 import { deadCodeElimination, findReferencedIdentifiers } from 'babel-dead-code-elimination'
 import { relative } from 'node:path'
-import type { Plugin } from 'vite'
+import type { Environment, Plugin } from 'vite'
 import { EMPTY_LOADER_STRING, LoaderDataCache } from './constants'
 
 const traverse = BabelTraverse['default'] as typeof BabelTraverse
@@ -16,11 +16,12 @@ export const clientTreeShakePlugin = (): Plugin => {
     enforce: 'post',
 
     applyToEnvironment(env) {
-      return env.name === 'client'
+      return env.name === 'client' || env.name === 'ios' || env.name === 'android'
     },
 
     async transform(code, id, settings) {
-      return await transformTreeShakeClient(code, id, settings)
+      const { environment } = this
+      return await transformTreeShakeClient(code, id, settings, { environment })
     },
   } satisfies Plugin
 }
@@ -28,9 +29,10 @@ export const clientTreeShakePlugin = (): Plugin => {
 export async function transformTreeShakeClient(
   code: string,
   id: string,
-  settings: { ssr?: boolean } | undefined
+  settings: { ssr?: boolean } | undefined,
+  { environment }: { environment: Environment }
 ) {
-  if (settings?.ssr) return
+  if (environment.name !== 'ios' && environment.name !== 'android' && settings?.ssr) return
   if (id.includes('node_modules')) return
 
   if (!/generateStaticParams|loader/.test(code)) {

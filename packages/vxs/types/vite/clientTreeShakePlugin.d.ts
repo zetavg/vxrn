@@ -1,8 +1,10 @@
-import type { Plugin } from 'vite';
+import type { Environment, Plugin } from 'vite';
 export declare const clientTreeShakePlugin: () => Plugin;
 export declare function transformTreeShakeClient(code: string, id: string, settings: {
     ssr?: boolean;
-} | undefined): Promise<{
+} | undefined, { environment }: {
+    environment: Environment;
+}): Promise<{
     code: string;
     map: {
         version: number;
